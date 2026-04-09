@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Sunrise Grand Hotel</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGIN PAGE -->
+  <div id="loginPage" class="card center-card">
+    <h2>Sunrise Grand Hotel — Admin Login</h2>
+    <input id="username" type="text" placeholder="Username">
+    <input id="password" type="password" placeholder="Password">
+    <button id="loginBtn">Login</button>
+    <p id="loginMsg" class="error"></p>
+  </div>
+
+  <!-- MAIN APP -->
+  <div id="app" class="hidden">
+
+    <header class="app-header">
+        <div>
+            <h1>Sunrise Grand Hotel</h1>
+            <p class="tag">Luxury Stay · Premium Service · Golden Comfort</p>
+        </div>
+
+        <div class="user-actions">
+            <button id="exportBtn" title="Export bookings (CSV)">Export CSV</button>
+            <button id="printAllBtn" title="Print all bookings">Print</button>
+            <button id="logoutBtn" class="danger">Logout</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="homeTab">Home</button>
+        <button class="tab-btn" data-tab="bookTab">Book Room</button>
+        <button class="tab-btn" data-tab="availTab">Check Availability</button>
+        <button class="tab-btn" data-tab="dashboardTab">Manager Dashboard</button>
+    </nav>
+
+    <main class="main">
+
+      <!-- HOME TAB -->
+      <section id="homeTab" class="tab-panel">
+        <h2>Welcome, Admin</h2>
+        <p>Use the tabs to create bookings, check availability, manage bookings and print receipts.</p>
+
+        <div class="gallery">
+            <img src="hotel.jpeg" alt="hotel1">
+            <img src="hotel2.jpeg" alt="hotel2">
+            <img src="hotel3.jpeg" alt="hotel3">
+        </div>
+
+        <div class="quick-stats">
+            <div class="stat">
+                <h3 id="totalBookings">0</h3>
+                <p>Total Bookings</p>
+            </div>
+            <div class="stat">
+                <h3 id="occupiedRooms">0</h3>
+                <p>Currently Occupied</p>
+            </div>
+            <div class="stat">
+                <h3 id="availableRooms">0</h3>
+                <p>Available Rooms</p>
+            </div>
+        </div>
+      </section>
+
+      <!-- BOOKING TAB -->
+      <section id="bookTab" class="tab-panel hidden">
+        <h2>Book a Room</h2>
+
+        <form id="bookingForm" class="form-grid">
+            <div>
+                <label>Customer Name</label>
+                <input id="custName" type="text" required>
+            </div>
+            <div>
+                <label>Phone</label>
+                <input id="custPhone" type="tel" required>
+            </div>
+            <div>
+                <label>Room Type</label>
+                <select id="roomType">
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                </select>
+            </div>
+            <div>
+                <label>Servicer</label>
+                <select id="servicerSelect">
+                    <option>Rohan</option>
+                    <option>Aman</option>
+                    <option>Priya</option>
+                    <option>Karan</option>
+                </select>
+            </div>
+            <div>
+                <label>Check-in</label>
+                <input id="checkIn" type="date" required>
+            </div>
+            <div>
+                <label>Check-out</label>
+                <input id="checkOut" type="date" required>
+            </div>
+
+            <div class="full-width">
+                <button id="checkAndAssignBtn" type="button">Check & Assign Room</button>
+            </div>
+
+            <div id="assignedInfo" class="assigned-box hidden full-width">
+                <p><b>Assigned:</b> <span id="assignedText"></span></p>
+                <p><b>Booking ID:</b> <span id="assignedID"></span></p>
+                <div class="payment-actions">
+                    <button id="payBtn" type="button">Simulate Payment</button>
+                    <button id="confirmSaveBtn" type="button">Save Booking</button>
+                </div>
+            </div>
+        </form>
+      </section>
+
+      <!-- AVAILABILITY TAB -->
+      <section id="availTab" class="tab-panel hidden">
+        <h2>Room Availability Checker</h2>
+        <div class="form-grid">
+            <div>
+                <label>Room Type</label>
+                <select id="availRoomType">
+                    <option value="Standard">Standard</option>
+                    <option value="Deluxe">Deluxe</option>
+                    <option value="Suite">Suite</option>
+                </select>
+            </div>
+            <div>
+                <label>Check-in</label>
+                <input id="availIn" type="date">
+            </div>
+            <div>
+                <label>Check-out</label>
+                <input id="availOut" type="date">
+            </div>
+            <div class="full-width">
+                <button id="checkAvailBtn">Check Availability</button>
+            </div>
+        </div>
+
+        <div id="availResults" class="assigned-box hidden full-width"></div>
+      </section>
+
+      <!-- DASHBOARD TAB -->
+      <section id="dashboardTab" class="tab-panel hidden">
+        <h2>Manager Dashboard</h2>
+
+        <div class="dashboard-controls">
+            <input id="searchBox" placeholder="Search by name, phone, booking id...">
+            <select id="filterType">
+                <option value="">All Types</option>
+                <option>Standard</option>
+                <option>Deluxe</option>
+                <option>Suite</option>
+            </select>
+            <select id="filterPayment">
+                <option value="">All Payment</option>
+                <option value="Paid">Paid</option>
+                <option value="Pending">Pending</option>
+            </select>
+            <button id="clearFilters">Clear</button>
+        </div>
+
+        <table id="bookingsTable" class="data-table">
+            <thead>
+                <tr>
+                    <th>Booking ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Room No</th>
+                    <th>Floor</th>
+                    <th>Type</th>
+                    <th>Servicer</th>
+                    <th>Check-in</th>
+                    <th>Check-out</th>
+                    <th>Payment</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+
+      </section>
+
+    </main>
+
+  </div> <!-- end app -->
+
+</div>
+
+<!-- Receipt print area (hidden) -->
+<div id="receiptPrintArea" class="print-area hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
